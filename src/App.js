@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom'; 
-
+import { BrowserRouter, Route } from 'react-router-dom'; 	
 import Header from './components/Header/Header'
 import Home from './components/Home/Home';
 import Main from './components/Main/Main';
@@ -71,12 +70,12 @@ class App extends React.Component {
 				</Route>
 
 				<Route path='/calendar'> 
-					<Main />
+						
 					<Calendar /> 
 				</Route>
 
 				<Route path='/details'> 
-					<Main />
+					
 					<Details /> 
 				</Route>
 
