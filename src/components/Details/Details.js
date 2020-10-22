@@ -1,23 +1,47 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import { useHistory } from 'react-router-dom';
+import Youtube from 'react-youtube';
+import useLaunches from '../useLaunches/useLaunches';
 import './detail.css'
+import Main from '../Main/Main';
 
-const Details = () =>(
-    <main className="details">
-		<div className="container">
-			<div className="details-row">
-				<div className="details-image">
-					<img src="https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png" alt=""/>
+
+
+
+const Details = (props) =>{
+
+	const [launch, setLaunch ] = useState(null);
+	const {getLaunch} = useLaunches();
+
+	useEffect(() => {
+		 setLaunch(getLaunch(props.match.params.id))
+	}, [getLaunch])
+
+	const history = useHistory();
+
+	if(!launch) return null;
+
+	// if(!launch) return <div>Downoald...</div> //Preloader
+
+  return (  
+	  <div>
+	  	<Main name={launch.name}/>
+		<main className="details">
+			<div className="container">
+				<div className="details-row">
+					<div className="details-image">
+						<img src={launch.links.patch.small} alt={launch.name}/>
+					</div>
+					<div className="details-content">
+  						<p className="details-description">{launch.details}</p>
+					</div>
 				</div>
-				<div className="details-content">
-					<p className="details-description">Engine failure at 33 seconds and loss of vehicle</p>
-				</div>
+				<Youtube className='details-youtube' videoId={launch.links.youtube_id}/>
 			</div>
-			<div>
-				<iframe className="details-youtube" width="560" height="315" src="https://www.youtube.com/embed/dLQ2tZEH6G0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen/>
-			</div>
+			<a onClick={history.goBack} className="button button-back">go back</a>
+		</main>
 		</div>
-		<Link to="/calendar" className="button button-back">go back</Link>
-	</main>
-)
+	)
+};
+
 export default Details;
